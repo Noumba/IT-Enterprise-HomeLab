@@ -41,8 +41,8 @@ The ESXi host acts as the bare-metal hypervisor managing all virtual machines an
 | Attribute | Value |
 |---|---|
 | Hypervisor | VMware ESXi 8.0.3 |
-| Hardware | [REQUIRED: HP EliteDesk 800 G4 — confirm CPU, RAM, storage] |
-| Management IP | [] |
+| Hardware | HP EliteDesk 800 |
+| Management IP | |
 | vSwitch | vSwitch-LAN (VMware Standard vSwitch) |
 | Physical uplink | vmnic0 → pfSense vtnet1 (802.1Q trunk) |
 
