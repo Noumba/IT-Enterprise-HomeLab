@@ -13,7 +13,9 @@
 1. [Project Overview](#1-project-overview)
 2. [Physical Topology](#2-physical-topology)
 3. [Logical Topology](#3-logical-topology)
-
+4. [Current Status](#4-current-status)
+5. [Projects](#5-projects)
+6. [Documentation](#6-documentation)
 ---
 
 ## 1. Project Overview
@@ -41,7 +43,7 @@ Out of scope: cloud integration, off-site VPN tunnels, IDS/IPS configuration (fu
 ---
 
 ## 2. Architecture Diagram
-![Home Lab Architecture Diagram](diagrams-images\architecture\homelab architecture-1.png)
+![Home Lab Architecture Diagram](diagrams-images/architecture/homelab%20architecture-1.png)
 
 ### Physical Device Inventory
 
@@ -106,7 +108,7 @@ pfSense is the sole Layer 3 device. Inter-VLAN routing, NAT, and firewall policy
 
 
 ## 6. Documentation
- - [Home Lab Design Documentation](docs\architecture) 
+ - [Home Lab Design Documentation](docs/architecture/Full_Enterprise_HomeLab_Network_Design%20document.pdf) 
 
 
 ## Appendix A — Skills Demonstrated
