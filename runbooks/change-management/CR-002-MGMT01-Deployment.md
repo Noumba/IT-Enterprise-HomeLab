@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---------|---------|
-| Change ID | CR-006 |
+| Change ID | CR-002 |
 | Title | Deploy MGMT01 Management Workstation |
 | Change Type | Standard |
 | Priority | Medium |
