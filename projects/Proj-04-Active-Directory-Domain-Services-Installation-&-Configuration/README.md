@@ -529,7 +529,7 @@ Verify the structure was created:
 ```powershell
 Get-ADOrganizationalUnit -Filter * | Select-Object Name, DistinguishedName | Sort-Object DistinguishedName
 ```
-
+![OU Structure](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/OU%20structure.JPG)
 ---
 
 ## 10. Phase 6 — User and Group Management
@@ -779,8 +779,8 @@ If any test fails, refer to [Section 16 — Troubleshooting](#16-troubleshooting
 
 On the workstation (e.g. a VM on VLAN50 LAB or your local PC):
 
-1. Set **DNS** to point to DC01: `10.10.10.10`
-2. Confirm the workstation can ping DC01: `ping 10.10.10.10`
+1. Set **DNS** to point to DC01: `10.1.20.10`
+2. Confirm the workstation can ping DC01: `ping 10.1.20.10`
 3. Confirm DNS resolution: `nslookup homelab.local`
 
 > If the workstation is on a different VLAN, ensure pfSense has a firewall rule allowing TCP/UDP 53 (DNS), TCP/UDP 88 (Kerberos), TCP/UDP 389 (LDAP), TCP 445 (SMB), TCP 3268 (Global Catalog) from that VLAN to VLAN10.
@@ -889,6 +889,3 @@ Get-ADComputer -Identity "WORKSTATION01" -Properties DistinguishedName | Select-
 
 - Microsoft Documentation — Active Directory Domain Services: https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/
 - Microsoft Documentation — Group Policy: https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/
-- HL-NET-001 — Home Lab Network Design
-- HL-NET-002 v2.0 — VLAN Architecture and pfSense Configuration
-- HL-NET-003 — Remote Access: WireGuard and Tailscale Implementation
