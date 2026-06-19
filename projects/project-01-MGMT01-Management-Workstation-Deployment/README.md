@@ -1,4 +1,4 @@
-# Project 02 - MGMT01 Management Workstation Deployment
+# Project 01 - MGMT01 Management Workstation Deployment
 
 ## Project Overview
 
