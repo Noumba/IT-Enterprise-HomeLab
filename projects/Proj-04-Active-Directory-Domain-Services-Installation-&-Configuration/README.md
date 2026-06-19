@@ -452,6 +452,8 @@ Open **Group Policy Management** (Server Manager → Tools → Group Policy Mana
 | Password must meet complexity requirements | Enabled |
 | Store passwords using reversible encryption | Disabled |
 
+![password Policy](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Password%20Policy.JPG)
+
 5. Navigate to **Account Lockout Policy**:
 
 | Setting | Recommended Value |
@@ -459,6 +461,8 @@ Open **Group Policy Management** (Server Manager → Tools → Group Policy Mana
 | Account lockout duration | 30 minutes |
 | Account lockout threshold | 5 invalid attempts |
 | Reset account lockout counter after | 30 minutes |
+
+![Account Lockout Policy](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/account-lockout-policy.JPG)
 
 ---
 
