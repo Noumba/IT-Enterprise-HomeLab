@@ -331,6 +331,9 @@ Group Policy Objects (GPOs) enforce security baselines and configuration standar
 1. Open **Server Manager → Tools → Group Policy Management**
 2. Expand **Forest: homelab.local → Domains → homelab.local**
 3. Right-click **Group Policy Objects** → **New**
+
+![Create GPO](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/Create%20GPO%201.JPG)
+
 4. Name: `GPO-Baseline-Security` → click **OK**
 5. Right-click `OU=_HOMELAB` → **Link an Existing GPO**
 6. Select **GPO-Baseline-Security** → click **OK**
@@ -350,13 +353,7 @@ Computer Configuration
 3. Double-click **Accounts: Guest account status**
 4. Check **Define this policy setting** → select **Disabled** → **OK**
 
-**Edit the GPO — Rename Built-in Administrator Account:**
-
-Still in Security Options:
-
-1. Double-click **Accounts: Rename administrator account**
-2. Check **Define this policy setting**
-3. Enter new name: `hlabadmin` → **OK**
+![Disable Guest Account](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/Disable%20Guest%20Account%20GPO.JPG)
 
 **Edit the GPO — Interactive Logon Warning Banner:**
 
@@ -364,25 +361,13 @@ Still in Security Options:
 
 1. Double-click **Interactive logon: Message title for users attempting to log on**
 2. Check **Define this policy setting**
-3. Enter: `HOMELAB — Authorised Access Only` → **OK**
+3. Enter: `Authorised Access Only` → **OK**
 
 4. Double-click **Interactive logon: Message text for users attempting to log on**
 5. Check **Define this policy setting**
-6. Enter: `This system is for authorised users only. All activity is monitored and logged.` → **OK**
+6. Enter: `You are accessing a DaVince Technologies information system.` → **OK**
 
-**Edit the GPO — Disable USB/Removable Storage:**
-
-Navigate to:
-```
-Computer Configuration
-  └── Policies
-        └── Administrative Templates
-              └── System
-                    └── Removable Storage Access
-```
-
-1. Double-click **All Removable Storage classes: Deny all access**
-2. Select **Enabled** → **OK**
+![Interactive logon banner](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/Login%20banner.JPG)
 
 ---
 
@@ -409,7 +394,7 @@ Set-GPRegistryValue -Name "GPO-Baseline-Security" `
   -Key "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" `
   -ValueName "legalnoticecaption" `
   -Type String `
-  -Value "HOMELAB - Authorised Access Only"
+  -Value "Authorised Access Only"
 
 # Set logon warning banner text
 Set-GPRegistryValue -Name "GPO-Baseline-Security" `
@@ -418,12 +403,6 @@ Set-GPRegistryValue -Name "GPO-Baseline-Security" `
   -Type String `
   -Value "This system is for authorised users only. All activity is monitored and logged."
 
-# Disable removable storage access
-Set-GPRegistryValue -Name "GPO-Baseline-Security" `
-  -Key "HKLM\SOFTWARE\Policies\Microsoft\Windows\RemovableStorageDevices" `
-  -ValueName "Deny_All" `
-  -Type DWord `
-  -Value 1
 ```
 
 > **Note:** Some security settings (e.g. Rename Administrator account) can only be configured via the GUI Group Policy Management Editor as they are secedit-based settings not directly accessible via `Set-GPRegistryValue`. Use Method A for those specific settings.
@@ -455,17 +434,7 @@ Computer Configuration
 4. Check **Define this policy setting**
 5. Enter `600` seconds (10 minutes) → **OK**
 
-**Edit — Disable Control Panel access for standard users:**
-
-Navigate to:
-```
-User Configuration
-  └── Policies
-        └── Administrative Templates
-              └── Control Panel
-```
-1. Double-click **Prohibit access to Control Panel and PC settings**
-2. Select **Enabled** → **OK**
+![Inactivity Limit](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/Machine%20inactivity%20limit.JPG)
 
 ---
 
@@ -486,91 +455,12 @@ Set-GPRegistryValue -Name "GPO-Workstation-Config" `
   -ValueName "InactivityTimeoutSecs" `
   -Type DWord `
   -Value 600
-
-# Disable Control Panel for users
-Set-GPRegistryValue -Name "GPO-Workstation-Config" `
-  -Key "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" `
-  -ValueName "NoControlPanel" `
-  -Type DWord `
-  -Value 1
 ```
 
----
-
-### 3.3 Create GPO — Server Configuration
-
-#### Method A — GUI
-
-1. Right-click **Group Policy Objects** → **New**
-2. Name: `GPO-Server-Config` → **OK**
-3. Right-click `OU=Servers` → **Link an Existing GPO** → select **GPO-Server-Config** → **OK**
-
-**Edit — Require NTLMv2 only (disable older authentication):**
-
-1. Right-click **GPO-Server-Config** → **Edit**
-2. Navigate to:
-```
-Computer Configuration
-  └── Policies
-        └── Windows Settings
-              └── Security Settings
-                    └── Local Policies
-                          └── Security Options
-```
-3. Double-click **Network security: LAN Manager authentication level**
-4. Check **Define this policy setting**
-5. Select **Send NTLMv2 response only. Refuse LM & NTLM** → **OK**
-
-**Edit — Audit Policy (enable login success/failure auditing):**
-
-Navigate to:
-```
-Computer Configuration
-  └── Policies
-        └── Windows Settings
-              └── Security Settings
-                    └── Local Policies
-                          └── Audit Policy
-```
-
-Configure:
-
-| Policy | Setting |
-|---|---|
-| Audit account logon events | Success, Failure |
-| Audit logon events | Success, Failure |
-| Audit object access | Failure |
-| Audit policy change | Success |
-| Audit privilege use | Failure |
-
----
-
-#### Method B — PowerShell
-
-```powershell
-# Create and link GPO
-New-GPO -Name "GPO-Server-Config" `
-  -Comment "Hardening and audit configuration for member servers"
-
-New-GPLink -Name "GPO-Server-Config" `
-  -Target "OU=Servers,OU=Computers,OU=_HOMELAB,DC=homelab,DC=local" `
-  -LinkEnabled Yes
-
-# Enforce NTLMv2 only
-Set-GPRegistryValue -Name "GPO-Server-Config" `
-  -Key "HKLM\SYSTEM\CurrentControlSet\Control\Lsa" `
-  -ValueName "LmCompatibilityLevel" `
-  -Type DWord `
-  -Value 5
-```
-
-> **Note:** Audit policy settings are best configured through the GUI Group Policy Management Editor as they map to secedit database entries rather than registry keys.
-
----
 
 ### 3.4 Configure Password Policy (Default Domain Policy)
 
-Password policy is set on the **Default Domain Policy** — it applies domain-wide to all user accounts.
+Password policy is set on the **Default Domain Policy**, it applies domain-wide to all user accounts.
 
 #### Method A — GUI
 
@@ -644,30 +534,6 @@ After creating and configuring all GPOs, force an immediate update — without t
 
 ---
 
-#### Method B — PowerShell
-
-```powershell
-# Force update on DC01 locally
-gpupdate /force
-
-# Force update on a specific remote computer
-Invoke-GPUpdate -Computer "DC01" -Force -RandomDelayInMinutes 0
-
-# Verify which GPOs are currently applied on this machine
-gpresult /r
-
-# Full detailed report (HTML format — open in browser)
-gpresult /h C:\GPO-Report.html
-Start-Process "C:\GPO-Report.html"
-```
-
-**Verify all three GPOs exist and are linked:**
-```powershell
-Get-GPO -All | Select-Object DisplayName, GpoStatus, CreationTime | Sort-Object DisplayName
-```
-
----
-
 ## 4. Phase 8 — DNS Verification
 
 DNS is the foundation of Active Directory. All authentication (Kerberos), directory queries (LDAP), and domain join operations depend on correct DNS resolution. Verify DNS thoroughly before proceeding.
@@ -686,7 +552,7 @@ DNS is the foundation of Active Directory. All authentication (Kerberos), direct
 |---|---|---|
 | SOA | @ | DC01.homelab.local |
 | NS | @ | DC01.homelab.local |
-| A | DC01 | 10.10.10.10 |
+| A | DC01 | 10.1.20.10 |
 | A | _msdcs | (multiple SRV/A records) |
 
 ---
@@ -709,7 +575,7 @@ Expected output:
 ```
 Name                Type   TTL   Section    IPAddress
 ----                ----   ---   -------    ---------
-DC01.homelab.local  A      1200  Answer     10.10.10.10
+DC01.homelab.local  A      1200  Answer     10.1.20.10
 ```
 
 ---
@@ -718,7 +584,7 @@ DC01.homelab.local  A      1200  Answer     10.10.10.10
 
 #### Method A — GUI
 
-1. In **DNS Manager**, expand `DC01 → Reverse Lookup Zones → 10.10.10.x Subnet`
+1. In **DNS Manager**, expand `DC01 → Reverse Lookup Zones → 20.1.10.x Subnet`
 2. Confirm a **PTR** record exists pointing `10` → `DC01.homelab.local`
 
 If the reverse zone does not exist, create it:
@@ -727,40 +593,11 @@ If the reverse zone does not exist, create it:
 2. Select **Primary Zone** → **Next**
 3. Select **To all DNS servers running on domain controllers in this domain** → **Next**
 4. Select **IPv4 Reverse Lookup Zone** → **Next**
-5. **Network ID:** enter `10.10.10` → **Next**
+5. **Network ID:** enter `10.1.20` → **Next**
 6. Accept defaults → **Finish**
 7. Right-click the new zone → **New Pointer (PTR)**
 8. Host IP: `10` | Host name: `DC01.homelab.local` → **OK**
 
----
-
-#### Method B — PowerShell
-
-```powershell
-# Check if reverse zone exists
-Get-DnsServerZone | Where-Object { $_.IsReverseLookupZone -eq $true }
-
-# If it does not exist, create it
-Add-DnsServerPrimaryZone `
-  -NetworkID "10.10.10.0/24" `
-  -ReplicationScope "Domain"
-
-# Add PTR record for DC01
-Add-DnsServerResourceRecordPtr `
-  -ZoneName "10.10.10.in-addr.arpa" `
-  -Name "10" `
-  -PtrDomainName "DC01.homelab.local."
-
-# Verify reverse lookup resolves correctly
-Resolve-DnsName -Name "10.10.10.10" -Type PTR
-```
-
-Expected output:
-```
-Name          Type  TTL    Section   NameHost
-----          ----  ---    -------   --------
-10.10.10.10   PTR   1200   Answer    DC01.homelab.local
-```
 
 ---
 
@@ -778,7 +615,7 @@ SRV records tell clients how to locate domain services (Kerberos, LDAP, Global C
 | `_ldap._tcp.homelab.local` | LDAP service locator |
 | `_kerberos._tcp.homelab.local` | Kerberos authentication |
 | `_gc._tcp.homelab.local` | Global Catalog |
-| `_kpasswd._tcp.homelab.local` | Kerberos password change |
+| `_kpasswd._tcp.homelab.local` | Kerberos password change | 
 
 ---
 
@@ -810,7 +647,7 @@ Then recheck after 60 seconds.
 
 #### Method A — GUI
 
-`dcdiag` is a command-line tool only — no GUI equivalent. Use Method B.
+`dcdiag` is a command-line tool only — no GUI equivalent.
 
 ---
 
@@ -873,23 +710,8 @@ Perform these steps **on the workstation**, not DC01.
 1. Open **Settings → Network & Internet → Change adapter options**
 2. Right-click the network adapter → **Properties**
 3. Select **Internet Protocol Version 4 (TCP/IPv4)** → **Properties**
-4. Set **Preferred DNS Server** to `10.10.10.10` (DC01)
+4. Set **Preferred DNS Server** to `10.1.20.10` (DC01)
 5. Click **OK → Close**
-
----
-
-#### Method B — PowerShell (run on workstation)
-
-```powershell
-# Identify the network adapter name
-Get-NetAdapter
-
-# Set DNS to DC01 (replace "Ethernet0" with your adapter name)
-Set-DnsClientServerAddress -InterfaceAlias "Ethernet0" -ServerAddresses "10.10.10.10"
-
-# Verify the DNS change
-Get-DnsClientServerAddress -InterfaceAlias "Ethernet0"
-```
 
 ---
 
@@ -899,33 +721,39 @@ Before joining the domain, confirm the workstation can reach DC01 on all require
 
 ```powershell
 # Basic ICMP test
-ping 10.10.10.10
+ping 10.1.20.10
 
 # Confirm DNS resolution of the domain
 nslookup homelab.local
 
 # Test critical AD ports (requires Test-NetConnection / PowerShell 4+)
-Test-NetConnection -ComputerName "10.10.10.10" -Port 53    # DNS
-Test-NetConnection -ComputerName "10.10.10.10" -Port 88    # Kerberos
-Test-NetConnection -ComputerName "10.10.10.10" -Port 389   # LDAP
-Test-NetConnection -ComputerName "10.10.10.10" -Port 445   # SMB
-Test-NetConnection -ComputerName "10.10.10.10" -Port 3268  # Global Catalog
+Test-NetConnection -ComputerName "10.1.20.10" -Port 53    # DNS
+Test-NetConnection -ComputerName "10.1.20.10" -Port 88    # Kerberos
+Test-NetConnection -ComputerName "10.1.20.10" -Port 389   # LDAP
+Test-NetConnection -ComputerName "10.1.20.10" -Port 445   # SMB
+Test-NetConnection -ComputerName "10.1.20.10" -Port 3268  # Global Catalog
 ```
 
-> **Multi-VLAN note:** If the workstation is on a different VLAN (e.g. VLAN50 LAB), add pfSense firewall rules allowing the above ports from that VLAN to `10.10.10.10` before proceeding.
+> **Multi-VLAN note:** If the workstation is on a different VLAN (e.g. VLAN50 LAB), add pfSense firewall rules allowing the above ports from that VLAN to `10.1.20.10` before proceeding.
 
 ---
 
 ### 5.3 Join the Domain
 
-#### Method A — GUI
+#### Join Windows Server 2022
 
 1. Right-click **This PC** → **Properties**
-2. Click **Change settings** (next to the computer name section)
+2. Click **Advanced system settings**
 3. On the **Computer Name** tab, click **Change**
+
+![Change Domain](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/Join%20Windows%20Server1.JPG)
+
 4. Under **Member of**, select **Domain**
 5. Enter: `homelab.local`
 6. Click **OK**
+
+![Change Domain](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/Join%20Windows%20Server2.JPG)
+
 7. Enter domain credentials when prompted:
 
 | Field | Value |
@@ -933,11 +761,18 @@ Test-NetConnection -ComputerName "10.10.10.10" -Port 3268  # Global Catalog
 | Username | HOMELAB\Administrator |
 | Password | (Administrator password) |
 
+![Domain Credentials](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/Domain%20Credentials.JPG)
+
 8. A dialog confirms: *"Welcome to the homelab.local domain"*
+
+![Domain Join Confirmation](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/welcome%20to%20domain%20message.JPG)
+
 9. Click **OK → OK**
 10. Click **Restart Now**
 
-> **Important:** The GUI method places the computer object in the default `Computers` container, not your custom OU. Move it after joining — see Section 5.4.
+> **Important:** The GUI method places the computer object in the default `Computers` container, not the custom OU. We can move it after joining as we will demonstrate in Section 5.4.
+
+![AD Computer](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/AD%20computer.JPG)
 
 ---
 
@@ -948,8 +783,8 @@ Test-NetConnection -ComputerName "10.10.10.10" -Port 3268  # Global Catalog
 Add-Computer `
   -DomainName "homelab.local" `
   -Credential (Get-Credential) `
-  -OUPath "OU=Workstations,OU=Computers,OU=_HOMELAB,DC=homelab,DC=local" `
-  -NewName "WORKSTATION01" `
+  -OUPath "OU=Servers,OU=Computers,OU=_HOMELAB,DC=homelab,DC=local" `
+  -NewName "MON01" `
   -Restart -Force
 ```
 
@@ -967,44 +802,46 @@ If you used the GUI method in 5.3, the computer object lands in the default `Com
 1. On DC01, open **Active Directory Users and Computers**
 2. Expand `homelab.local → Computers`
 3. Right-click the workstation object → **Move**
-4. Navigate to `_HOMELAB → Computers → Workstations`
+4. Navigate to `_HOMELAB → Computers → Servers`
 5. Click **OK**
 
+![Move Server to another OU](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/move%20server%20to%20different%20OU.JPG)
 ---
 
 #### Method B — PowerShell (run on DC01)
 
 ```powershell
 # Move computer from default Computers container to the Workstations OU
-Get-ADComputer -Identity "WORKSTATION01" | Move-ADObject `
-  -TargetPath "OU=Workstations,OU=Computers,OU=_HOMELAB,DC=homelab,DC=local"
+Get-ADComputer -Identity "MON01" | Move-ADObject `
+  -TargetPath "OU=Servers,OU=Computers,OU=_HOMELAB,DC=homelab,DC=local"
 ```
 
 ---
 
 ### 5.5 Verify Domain Join on DC01
 
-After the workstation restarts, verify the join was successful from DC01:
+After the server restarts, verify the join was successful from DC01:
 
 #### Method A — GUI
 
 1. Open **Active Directory Users and Computers**
-2. Navigate to `_HOMELAB → Computers → Workstations`
-3. Confirm `WORKSTATION01` appears in the list
+2. Navigate to `_HOMELAB → Computers → servers`
+3. Confirm `MON01` appears in the list
 4. Right-click the object → **Properties** to confirm the **DNS name** and **Operating System** are populated
 
+![Join Confirmation](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/Join%20confirmation.JPG)
 ---
 
 #### Method B — PowerShell (run on DC01)
 
 ```powershell
 # Confirm computer object exists in AD
-Get-ADComputer -Identity "WORKSTATION01" -Properties DistinguishedName, OperatingSystem |
+Get-ADComputer -Identity "MON01" -Properties DistinguishedName, OperatingSystem |
   Select-Object Name, DistinguishedName, OperatingSystem
 
 # List all computers in the Workstations OU
 Get-ADComputer -Filter * `
-  -SearchBase "OU=Workstations,OU=Computers,OU=_HOMELAB,DC=homelab,DC=local" |
+  -SearchBase "OU=Servers,OU=Computers,OU=_HOMELAB,DC=homelab,DC=local" |
   Select-Object Name, DistinguishedName
 ```
 
@@ -1019,7 +856,7 @@ After the workstation restarts:
 
 | Field | Value |
 |---|---|
-| Username | HOMELAB\l.noumba |
+| Username | HOMELAB\lnoumba |
 | Password | (set password) |
 
 3. Confirm login is successful
@@ -1039,7 +876,7 @@ gpresult /r
 Expected output:
 ```
 USERDOMAIN = HOMELAB
-whoami     = homelab\l.noumba
+whoami     = homelab\lnoumba
 ```
 
 ---
@@ -1050,20 +887,20 @@ Run all checks below from DC01 after completing all phases. All items should pas
 
 | # | Test | Command / Location | Expected Result |
 |---|---|---|---|
-| 1 | DC01 A record resolves | `Resolve-DnsName DC01.homelab.local` | Returns `10.10.10.10` |
-| 2 | Reverse lookup | `Resolve-DnsName 10.10.10.10` | Returns `DC01.homelab.local` |
+| 1 | DC01 A record resolves | `Resolve-DnsName DC01.homelab.local` | Returns `10.1.20.10` |
+| 2 | Reverse lookup | `Resolve-DnsName 10.1.20.10` | Returns `DC01.homelab.local` |
 | 3 | LDAP SRV record | `nslookup -type=SRV _ldap._tcp.homelab.local` | Returns DC01 record |
 | 4 | Kerberos SRV record | `nslookup -type=SRV _kerberos._tcp.homelab.local` | Returns DC01 record |
 | 5 | AD DS full health | `dcdiag /v` | All tests pass |
 | 6 | FSMO roles | `netdom query fsmo` | All 5 roles on DC01 |
 | 7 | Security groups exist | `Get-ADGroup -Filter *` | All 4 groups visible |
 | 8 | User accounts exist | `Get-ADUser -Filter *` | All 3 users visible |
-| 9 | Group memberships | `Get-ADGroupMember "GRP-IT-Admins"` | l.noumba listed |
+| 9 | Group memberships | `Get-ADGroupMember "GRP-IT-Admins"` | lnoumba listed |
 | 10 | GPOs exist and linked | `Get-GPO -All` | All 3 GPOs listed |
 | 11 | GPO applied on DC01 | `gpresult /r` | GPOs listed as applied |
 | 12 | Password policy active | `Get-ADDefaultDomainPasswordPolicy` | Matches configured values |
 | 13 | Workstation joined domain | ADUC → Computers → Workstations | WORKSTATION01 visible |
-| 14 | Domain login | Login as `HOMELAB\l.noumba` on workstation | Successful |
+| 14 | Domain login | Login as `HOMELAB\lnoumba` on workstation | Successful |
 | 15 | GPO on workstation | `gpresult /r` on workstation | Baseline GPO applied |
 | 16 | Logon banner appears | Restart workstation and observe login screen | Banner displays |
 
@@ -1080,20 +917,6 @@ Run all checks below from DC01 after completing all phases. All items should pas
 - **`dcdiag /v` is the single most useful post-deployment validation tool.** It covers connectivity, SRV records, replication, FSMO roles, and SYSVOL — running it after any major AD change should be standard practice.
 - **Multi-VLAN lab environments require pfSense firewall rules for domain join.** Missing rules on inter-VLAN traffic silently block Kerberos and LDAP, making the domain appear unreachable even when DNS is correct.
 
-### 7.2 Process
-
-- **Both GUI and PowerShell methods should be understood.** GUI is faster for one-off changes; PowerShell is essential for bulk operations, automation, and repeatable deployments. Knowing both demonstrates enterprise-grade competency.
-- **Document GPO settings with navigation paths, not just descriptions.** Exact paths through the Group Policy Management Editor are non-trivial to rediscover — recording the full path (`Computer Configuration → Policies → ...`) saves significant time on re-deployment.
-- **Test domain join from a different VLAN, not just the same subnet.** A workstation that joins successfully from VLAN10 does not guarantee VLAN50 workstations will succeed — pfSense rules must be validated per VLAN.
-
-### 7.3 Recommendations for Future Iterations
-
-- **Deploy DC02 (VLAN20 INFRA)** to implement AD replication, eliminate FSMO single-point-of-failure, and demonstrate multi-DC architecture concepts.
-- **Implement Fine-Grained Password Policies (PSOs)** to enforce stricter password requirements on `GRP-IT-Admins` accounts.
-- **Integrate SolarWinds monitoring** to alert on DC01 service health, Kerberos authentication failures, and LDAP query latency — directly relevant to existing SolarWinds client deployments.
-- **Configure AD Sites and Services** to define the MGMT VLAN as an AD site — foundational knowledge for enterprise multi-site environments and a strong portfolio talking point.
-- **Enable Advanced Audit Policy** using `auditpol` to capture detailed security events (account logon, privilege use, object access) and forward logs to a SIEM in a future phase.
-
 ---
 
 ## 8. Troubleshooting Reference
@@ -1103,7 +926,7 @@ Run all checks below from DC01 after completing all phases. All items should pas
 | User cannot log in after domain join | Wrong username format | Use `HOMELAB\username`, not just `username` |
 | GPO not applying to workstation | Computer in wrong OU | Move to correct OU via ADUC or `Move-ADObject` |
 | GPO not applying after linking | Policy not refreshed | Run `gpupdate /force` on the target machine |
-| Workstation cannot find domain | DNS not pointing to DC01 | Set DNS to `10.10.10.10` on workstation NIC |
+| Workstation cannot find domain | DNS not pointing to DC01 | Set DNS to `10.1.20.10` on workstation NIC |
 | Domain join fails — timeout | Firewall blocking AD ports | Add pfSense rule allowing ports 53, 88, 389, 445, 3268 from workstation VLAN to VLAN10 |
 | Domain join fails — credentials rejected | Wrong credential format | Use `HOMELAB\Administrator`, not `homelab.local\Administrator` |
 | SRV records missing | Netlogon not registered them | Run `Restart-Service netlogon` on DC01 |
@@ -1112,7 +935,7 @@ Run all checks below from DC01 after completing all phases. All items should pas
 | Password change rejected | Complexity policy active | Use 12+ characters with upper, lower, number, symbol |
 | User locked out | Exceeded logon threshold (5 attempts) | Unlock via `Unlock-ADAccount -Identity username` |
 | Computer object in wrong OU | GUI join used without OUPath | Move via `Move-ADObject` or ADUC drag-and-drop |
-| `nslookup homelab.local` fails on workstation | DNS not set to DC01 | Set preferred DNS to `10.10.10.10` |
+| `nslookup homelab.local` fails on workstation | DNS not set to DC01 | Set preferred DNS to `10.1.20.10` |
 
 ---
 
@@ -1121,6 +944,4 @@ Run all checks below from DC01 after completing all phases. All items should pas
 - Microsoft Docs — Active Directory Users and Computers: https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/
 - Microsoft Docs — Group Policy Management: https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/
 - Microsoft Docs — Active Directory PowerShell Module: https://docs.microsoft.com/en-us/powershell/module/activedirectory/
-- HL-SRV-001 — Active Directory DS Installation & Promotion
-- HL-NET-002 v2.0 — VLAN Architecture and pfSense Firewall Rules
-- HL-NET-003 — Remote Access: WireGuard and Tailscale Implementation
+- PROJ-04 — Active Directory DS Installation & Configuration
