@@ -847,7 +847,7 @@ Get-ADComputer -Filter * `
 
 ---
 
-### 5.6 Test Domain Login on Workstation
+### 5.6 Test Domain Login on server
 
 After the workstation restarts:
 
@@ -878,6 +878,10 @@ Expected output:
 USERDOMAIN = HOMELAB
 whoami     = homelab\lnoumba
 ```
+
+Verify AD logon message
+
+![AD Logon message](../PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/Images/logon%20message.JPG)
 
 ---
 
