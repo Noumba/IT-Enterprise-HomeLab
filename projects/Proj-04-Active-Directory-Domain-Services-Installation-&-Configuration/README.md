@@ -196,23 +196,38 @@ ping 10.1.20.1
 ```
 ---
 
-## 6. Phase 2 — Install AD DS Role
+## 6. Phase 2 — Install AD DS and DNS Role
 
 ### 6.1 Install via Server Manager (GUI)
 
 1. Open **Server Manager**
 2. Click **Manage → Add Roles and Features**
-![Setup Static IP](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Add-Roles-and-Features.JPG)
+
+![Add Roles and Feature](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Add-Roles-and-Features.JPG)
+
 3. **Before You Begin** → click **Next**
 4. **Installation Type** → select **Role-based or feature-based installation** → **Next**
-![Installation Type](image.png)
+
+![Installation Type](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Installation-Type.JPG)
+
 5. **Server Selection** → confirm `DC01` is selected → **Next**
-6. **Server Roles** → check **Active Directory Domain Services**
+6. **Server Roles** → check **Active Directory Domain Services and DNS**
+
+![Server Roles](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Server%20Roles.JPG)
+
+> **Note:** Active Directory DS deployment requires DNS which could be deployed simultaneously. This is because DNS is integral to the functioning and management of an Active Directory environment. It provides name resolution services for domain-joined computers and services, enabling them to locate and communicate with domain controllers.
+
 7. A pop-up appears — click **Add Features** to include required management tools
 8. Click **Next** through Features and AD DS information pages
 9. **Confirmation** → check **Restart the destination server automatically if required**
+
+![Confirmation](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Confirmation.JPG)
+
 10. Click **Install**
 11. Wait for installation to complete — do **not** close the window
+
+![Installing](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Installing.JPG)
+
 ---
 
 ## 7. Phase 3 — Promote Server to Domain Controller
@@ -224,6 +239,8 @@ This phase creates a **new forest** and **new domain** (`homelab.local`), making
 1. In **Server Manager**, click the **notification flag** (yellow triangle) at the top
 2. Click **Promote this server to a domain controller**
 
+![Promote Server to DC](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Promote-Server-to-DC.JPG)
+
 ---
 
 ### 7.2 Deployment Configuration
@@ -232,20 +249,24 @@ This phase creates a **new forest** and **new domain** (`homelab.local`), making
 2. **Root domain name:** `homelab.local`
 3. Click **Next**
 
+![Add new Forest](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Add-new-Forest.JPG)
+
 ---
 
 ### 7.3 Domain Controller Options
 
 | Setting | Value |
 |---|---|
-| Forest Functional Level | Windows Server 2016 (or 2022) |
-| Domain Functional Level | Windows Server 2016 (or 2022) |
+| Forest Functional Level | Windows Server 2016 |
+| Domain Functional Level | Windows Server 2016 |
 | Domain Name System (DNS) server | ✅ Checked |
 | Global Catalog (GC) | ✅ Checked (greyed out — required for first DC) |
 | Read Only Domain Controller (RODC) | ☐ Unchecked |
 | DSRM Password | Set a strong password and record it securely |
 
 > **DSRM (Directory Services Restore Mode) password** is critical — store it in a safe location. It is used to recover AD if the domain becomes unavailable.
+
+![DC Options](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/DC%20Options.JPG)
 
 Click **Next**
 
@@ -257,11 +278,15 @@ A warning may appear: *"A delegation for this DNS server cannot be created..."*
 
 This is **expected and normal** in a new forest with no parent DNS zone. Click **Next** to continue.
 
+![DNS Options](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/DNS%20Option.JPG)
+
 ---
 
 ### 7.5 Additional Options
 
 **NetBIOS domain name** will auto-populate as `HOMELAB`. Confirm and click **Next**.
+
+![Netbios name](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Netbios%20name.JPG)
 
 ---
 
@@ -275,6 +300,8 @@ Leave default paths unless you have a specific reason to change them:
 | Log files folder | `C:\Windows\NTDS` |
 | SYSVOL folder | `C:\Windows\SYSVOL` |
 
+![Paths](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Paths.JPG)
+
 Click **Next**
 
 ---
@@ -282,6 +309,8 @@ Click **Next**
 ### 7.7 Review Options
 
 Review the summary. Optionally click **View Script** to export the equivalent PowerShell command for documentation purposes.
+
+![Review Options](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/review%20options.JPG)
 
 Click **Next**
 
@@ -296,6 +325,8 @@ The wizard runs a prerequisites check. Common warnings you may see:
 | "Windows Server 2022 domain controllers have a default for..." | Informational — click Next |
 | "This computer has at least one physical network adapter..." | Informational — click Next |
 | Any **error** (red) | Must be resolved before proceeding |
+
+![Prerequisites Check](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Prereq-check.JPG)
 
 Once all checks show green or yellow warnings only, click **Install**
 
