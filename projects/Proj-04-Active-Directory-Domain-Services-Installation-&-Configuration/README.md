@@ -362,7 +362,7 @@ DomainMode        : Windows2016Domain
 Name              : homelab
 NetBIOSName       : HOMELAB
 ```
-
+![Verify Promotion](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/verify%20promotion.JPG)
 ---
 
 ## 8. Phase 4 — Post-Deployment Configuration
@@ -387,6 +387,8 @@ Expected zones:
 homelab.local           (Primary — Forward Lookup Zone)
 10.10.10.in-addr.arpa   (Reverse Lookup Zone — if configured)
 ```
+
+![Verify DNS Config](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Verify-DNS-Config.JPG)
 
 ---
 
