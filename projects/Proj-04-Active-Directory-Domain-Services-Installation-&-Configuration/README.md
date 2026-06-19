@@ -401,12 +401,14 @@ A reverse lookup zone allows DNS to resolve IP addresses back to hostnames — i
 3. Select **Primary Zone** → **Next**
 4. Select **To all DNS servers running on domain controllers in this domain** → **Next**
 5. Select **IPv4 Reverse Lookup Zone** → **Next**
-6. **Network ID:** enter `10.10.10` → **Next**
+6. **Network ID:** enter `10.1.10` → **Next**
 7. Accept defaults → **Finish**
+
+![Add Reverse Lookup Zone](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Create-reverse-lookup-zone.JPG)
 
 Add a PTR record for DC01:
 ```powershell
-Add-DnsServerResourceRecordPtr -ZoneName "10.10.10.in-addr.arpa" `
+Add-DnsServerResourceRecordPtr -ZoneName "10.1.10.in-addr.arpa" `
   -Name "10" -PtrDomainName "DC01.homelab.local."
 ```
 
