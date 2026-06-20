@@ -151,8 +151,8 @@ Deployment of Active Directory Domain Services (AD DS) on a Windows Server 2022 
 | All 3 GPOs created and linked (`Get-GPO -All`) | ✅ Pass |
 | Password policy applied (`Get-ADDefaultDomainPasswordPolicy`) | ✅ Pass |
 | MON01 successfully joined domain | ✅ Pass |
-| MON01 placed in correct OU (Workstations) | ✅ Pass |
-| Domain login successful on MON01 (`HOMELAB\l.noumba`) | ✅ Pass |
+| MON01 placed in correct OU (Servers) | ✅ Pass |
+| Domain login successful on MON01 (`HOMELAB\lnoumba`) | ✅ Pass |
 | Logon banner displays correctly on MON01 | ✅ Pass |
 | GPO applies on MON01 (`gpresult /r`) | ✅ Pass |
 
@@ -165,7 +165,7 @@ Deployment of Active Directory Domain Services (AD DS) on a Windows Server 2022 
 | Remote GPO update to MON01 failed — Error `8007071a` ("the remote procedure call was cancelled") | RPC/firewall interruption during remote policy push to MON01 | Verified MON01 connectivity, enabled required firewall rule groups (WMI, Remote Scheduled Tasks, Remote Event Log Management), retried `Invoke-GPUpdate` | Resolved |
 | Group Policy processing failure — unable to read `gpt.ini` from SYSVOL | Investigated as DNS, SMB/RPC connectivity, or DFSR replication latency issue | Verified DNS resolution, SMB port 445 reachability, SYSVOL share availability, and DFSR service status on DC01 | Resolved |
 
-> Both issues were transient/connectivity-related and did not require structural changes to the AD design. Full diagnostic steps are documented in HL-SRV-001-B §8 (Troubleshooting Reference).
+> Both issues were transient/connectivity-related and did not require structural changes to the AD design. Full diagnostic steps are documented in PROJ-05 (Troubleshooting Reference).
 
 ---
 
@@ -177,7 +177,7 @@ Deployment of Active Directory Domain Services (AD DS) on a Windows Server 2022 
 | All validation tests passed | ✅ Yes |
 | Rollback required | ❌ No |
 | Unplanned downtime | ❌ None (lab environment) |
-| Documentation updated | ✅ HL-SRV-001, HL-SRV-001-B published |
+| Documentation updated | ✅ PROJ-05 published |
 | Follow-up changes identified | ✅ See Section 13 |
 
 ---
@@ -186,10 +186,10 @@ Deployment of Active Directory Domain Services (AD DS) on a Windows Server 2022 
 
 | # | Action | Target CR |
 |---|---|---|
-| 1 | Deploy DC02 on VLAN20 (INFRA) for redundancy and AD replication | CR-2026-004 (planned) |
-| 2 | Implement Fine-Grained Password Policies (PSOs) for `GRP-IT-Admins` | CR-2026-005 (planned) |
-| 3 | Integrate SolarWinds monitoring for DC health and replication alerts | CR-2026-006 (planned) |
-| 4 | Configure AD Sites and Services to align with VLAN topology | CR-2026-007 (planned) |
+| 1 | Deploy DC02 on VLAN20 (INFRA) for redundancy and AD replication | CR-003 (planned) |
+| 2 | Implement Fine-Grained Password Policies (PSOs) for `GRP-IT-Admins` | CR-004 (planned) |
+| 3 | Integrate SolarWinds monitoring for DC health and replication alerts | CR-006 (planned) |
+| 4 | Configure AD Sites and Services to align with VLAN topology | CR-007 (planned) |
 
 ---
 
@@ -197,9 +197,9 @@ Deployment of Active Directory Domain Services (AD DS) on a Windows Server 2022 
 
 | Role | Name | Decision | Date |
 |---|---|---|---|
-| Change Requester | Leonard Noumba | Approved | 2026-06-20 |
-| Change Implementer | Leonard Noumba | Approved | 2026-06-20 |
-| Change Reviewer | Leonard Noumba (self-reviewed — single-operator lab) | Approved | 2026-06-20 |
+| Change Requester | Leonard Noumba | Approved | 2026-06-17 |
+| Change Implementer | Leonard Noumba | Approved | 2026-06-17 |
+| Change Reviewer | Leonard Noumba (self-reviewed — single-operator lab) | Approved | 2026-06-17 |
 
 > **Note:** As this is a single-operator home lab environment, the requester, implementer, and reviewer roles are held by the same individual. In an enterprise setting, these roles would be segregated across distinct stakeholders (e.g. requester, technical lead, change advisory board) as part of standard change management governance.
 
@@ -207,7 +207,5 @@ Deployment of Active Directory Domain Services (AD DS) on a Windows Server 2022 
 
 ## References
 
-- HL-SRV-001 — Active Directory DS Installation & Promotion
-- HL-SRV-001-B — AD User & Group Management, GPO, DNS Verification & Domain Join
-- HL-NET-002 v2.0 — VLAN Architecture and pfSense Firewall Rules
-- ITIL 4 Foundation — Change Enablement Practice (process reference)
+- PROJ-04 — Active Directory DS Installation & Promotion
+- PROJ-05 — AD User & Group Management, GPO, DNS Verification & Domain Join
