@@ -207,5 +207,5 @@ Deployment of Active Directory Domain Services (AD DS) on a Windows Server 2022 
 
 ## References
 
-- PROJ-04 — Active Directory DS Installation & Promotion
-- PROJ-05 — AD User & Group Management, GPO, DNS Verification & Domain Join
+- [PROJ-04 — Active Directory DS Installation & Promotion](../../projects/Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/README.md)
+- [PROJ-05 — AD User & Group Management, GPO, DNS Verification & Domain Join](../../projects/PROJ-05-Active-Directory-User-Management-Group-Policy-DNS-&-Domain-Join/README.md)
