@@ -7,17 +7,16 @@
 
 | Field | Detail |
 |---|---|
-| CR ID | CR-2026-003 |
+| CR ID | CR-003 |
 | Title | Deployment of Active Directory Domain Services on DC01 |
 | Requested By | Leonard Noumba |
 | Change Owner / Implementer | Leonard Noumba |
-| Date Raised | 2026-06-20 |
-| Date Implemented | 2026-06-20 |
-| Environment | DaVince Technologies — Enterprise Home Lab |
-| Related Documents | HL-NET-001, HL-NET-002, HL-NET-003, HL-SRV-001, HL-SRV-001-B |
-| Change Type | Standard — New Infrastructure Deployment |
+| Date Raised | 2026-06-15 |
+| Date Implemented | 2026-06-18 |
+| Environment | Enterprise Home Lab |
+| Change Type | Standard |
 | Change Category | Server / Identity Infrastructure |
-| Priority | Medium |
+| Priority | High |
 | Status | ✅ Completed |
 
 ---
@@ -45,13 +44,12 @@ Deployment of Active Directory Domain Services (AD DS) on a Windows Server 2022 
 - Installation of AD DS role on DC01
 - Promotion of DC01 to Domain Controller (new forest/domain: `homelab.local`)
 - DNS forward and reverse lookup zone configuration
-- NTP time synchronisation configuration on DC01
 - Default Domain Password Policy configuration
 - Organisational Unit (OU) hierarchy creation
-- Security group creation (4 groups)
+- Security group creation
 - User account provisioning (3 accounts)
-- Group Policy Object creation and linking (3 GPOs)
-- Domain join of one workstation (MON01) for verification
+- Group Policy Object creation and linking (1+ GPOs)
+- Domain join of one server (MON01) for verification
 
 ### 4.2 Out of Scope
 
@@ -68,9 +66,9 @@ Deployment of Active Directory Domain Services (AD DS) on a Windows Server 2022 
 
 | System | VLAN | IP Address | Impact |
 |---|---|---|---|
-| DC01 (Windows Server 2022) | VLAN10 MGMT | 10.10.10.10 | New role installed; server promoted to Domain Controller |
-| MON01 | VLAN10 MGMT | 10.10.10.x | Joined to domain for verification |
-| pfSense | All VLANs | 10.10.x.1 | Firewall rules reviewed for AD ports (DNS, Kerberos, LDAP, SMB, GC) |
+| DC01 (Windows Server 2022) | VLAN10 MGMT | 10.1.20.10 | New role installed; server promoted to Domain Controller |
+| MON01 | VLAN20 MGMT | 10.1.20.x | Joined to domain for verification |
+| pfSense | All VLANs | 10.1.x.1 | Firewall rules reviewed for AD ports (DNS, Kerberos, LDAP, SMB, GC) |
 
 ---
 
@@ -79,7 +77,7 @@ Deployment of Active Directory Domain Services (AD DS) on a Windows Server 2022 
 | # | Item | Status |
 |---|---|---|
 | 1 | DC01 VM deployed and Windows Server 2022 installed | ✅ Complete |
-| 2 | Static IP assigned to DC01 (10.10.10.10) | ✅ Complete |
+| 2 | Static IP assigned to DC01 (10.1.20.10) | ✅ Complete |
 | 3 | Hostname set to DC01 prior to promotion | ✅ Complete |
 | 4 | Time zone configured correctly | ✅ Complete |
 | 5 | Windows Updates applied | ✅ Complete |
@@ -93,18 +91,18 @@ Deployment of Active Directory Domain Services (AD DS) on a Windows Server 2022 
 
 | Step | Action | Reference |
 |---|---|---|
-| 1 | Configure static IP, hostname, time zone on DC01 | HL-SRV-001 §5 |
-| 2 | Install AD DS role | HL-SRV-001 §6 |
-| 3 | Promote DC01 to Domain Controller (new forest: homelab.local) | HL-SRV-001 §7 |
-| 4 | Configure reverse DNS lookup zone and NTP | HL-SRV-001 §8 |
-| 5 | Apply Default Domain Password Policy | HL-SRV-001-B §3.4 |
-| 6 | Create OU hierarchy | HL-SRV-001-B §1 (reference), HL-SRV-001 §9 |
-| 7 | Create security groups and user accounts | HL-SRV-001-B §2 |
-| 8 | Create and link GPOs (Baseline Security, Workstation Config, Server Config) | HL-SRV-001-B §3 |
-| 9 | Verify DNS (SRV records, dcdiag) | HL-SRV-001-B §4 |
-| 10 | Join MON01 to domain and verify | HL-SRV-001-B §5 |
+| 1 | Configure static IP, hostname, time zone on DC01 | PROJ-01 |
+| 2 | Install AD DS role | PROJ-04 |
+| 3 | Promote DC01 to Domain Controller (new forest: homelab.local) | PROJ-04 |
+| 4 | Configure reverse DNS lookup zone and NTP | PROJ-004 |
+| 5 | Apply Default Domain Password Policy | PROJ-05 |
+| 6 | Create OU hierarchy | PROJ-05 |
+| 7 | Create security groups and user accounts | PROJ-05 |
+| 8 | Create and link GPOs (Baseline Security, Workstation Config, Server Config) | PROJ-05 |
+| 9 | Verify DNS (SRV records, dcdiag) | PROJ-05 |
+| 10 | Join MON01 to domain and verify | PROJ-05 |
 
-**Implementation Method:** Combination of GUI (Server Manager, Active Directory Users and Computers, Group Policy Management Console) and PowerShell, per HL-SRV-001 and HL-SRV-001-B documentation.
+**Implementation Method:** Combination of GUI (Server Manager, Active Directory Users and Computers, Group Policy Management Console) and PowerShell, per PROJ-04 and PROJ-05 documentation.
 
 ---
 
