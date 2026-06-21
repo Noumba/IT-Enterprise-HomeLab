@@ -11,7 +11,7 @@
 | Requested By | Leonard Noumba |
 | Date Submitted | 21 June 2026 |
 | Environment | Home Lab (VMware ESXi 8.0 / pfSense Multi-VLAN) |
-| Status | Pending Approval |
+| Status | Approved |
 | Version | 1.0 |
 
 ---
@@ -81,7 +81,7 @@ Install the **Web Server (IIS)** role on MON01, verify the default website is fu
 |---|---|---|
 | Likelihood of failure | Low | Standard Microsoft role installation, well-documented procedure |
 | Impact if failed | Low | Single non-production lab server; no dependent services currently rely on MON01 |
-| Overall Risk Rating | **Low** | |
+| Overall Risk Rating | **Low** | No critical impact on Lab environment |
 
 ### 4.3 Security Considerations
 
@@ -106,7 +106,7 @@ Install the **Web Server (IIS)** role on MON01, verify the default website is fu
 ## 6. Implementation Plan
 
 | Step | Action |
-|---|---|---|
+|---|---|
 | 1 | Apply pending Windows Updates and reboot MON01 |
 | 2 | Confirm static IP, hostname, and connectivity |
 | 3 | Install Web Server (IIS) role |
@@ -173,11 +173,11 @@ Full verification matrix defined in **HL-SRV-002 §10 — Verification & Testing
 | Role | Name | Decision | Date |
 |---|---|---|---|
 | Change Requester | Leonard Noumba | Submitted | 21 June 2026 |
-| Change Approver | Leonard Noumba | ☐ Approved ☐ Rejected ☐ Approved with Conditions | |
+| Change Approver | Leonard Noumba | [x] Approved ☐ Rejected ☐ Approved with Conditions | |
 
 **Approval conditions / comments:**
 ```
-[To be completed at approval]
+IIS deployment is would be required for long-term implementations as this server would host our monitoring application and would host the platform UI console. As result, I approve this deployment with immediate effect.
 ```
 
 ---
