@@ -83,7 +83,7 @@ Install the **Web Server (IIS)** role on MON01, verify the default website is fu
 | Impact if failed | Low | Single non-production lab server; no dependent services currently rely on MON01 |
 | Overall Risk Rating | **Low** | No critical impact on Lab environment |
 
-### 4.3 Security Considerations
+### 4.2 Security Considerations
 
 - New inbound firewall surface is being created (TCP/80 to 10.1.20.20) — scoped to a specific source VLAN, not "Any"
 - No authentication is configured on the default IIS site at this stage — site will serve only a static, non-sensitive landing page
@@ -197,3 +197,5 @@ IIS deployment is would be required for long-term implementations. As result, I 
 | Follow-up Actions Required | NO |
 
 ---
+
+## 12. Reference
