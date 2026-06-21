@@ -173,11 +173,11 @@ Full verification matrix defined in **HL-SRV-002 §10 — Verification & Testing
 | Role | Name | Decision | Date |
 |---|---|---|---|
 | Change Requester | Leonard Noumba | Submitted | 21 June 2026 |
-| Change Approver | Leonard Noumba | [x] Approved ☐ Rejected ☐ Approved with Conditions | |
+| Change Approver | Leonard Noumba | ✅ Approved ☐ Rejected ☐ Approved with Conditions | |
 
 **Approval conditions / comments:**
 ```
-IIS deployment is would be required for long-term implementations as this server would host our monitoring application and would host the platform UI console. As result, I approve this deployment with immediate effect.
+IIS deployment is would be required for long-term implementations. As result, I approve this deployment with immediate effect.
 ```
 
 ---
