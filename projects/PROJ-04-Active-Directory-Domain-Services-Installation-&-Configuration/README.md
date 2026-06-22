@@ -121,7 +121,7 @@ Default Gateway:  10.1.20.1
 Preferred DNS:    127.0.0.1
 ```
 
-![Setup Static IP](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Static-IP.JPG)
+![Setup Static IP](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Static-IP.JPG)
 
 5. Click **OK** → **Close**
 
@@ -196,17 +196,17 @@ ping 10.1.20.1
 1. Open **Server Manager**
 2. Click **Manage → Add Roles and Features**
 
-![Add Roles and Feature](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Add-Roles-and-Features.JPG)
+![Add Roles and Feature](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Add-Roles-and-Features.JPG)
 
 3. **Before You Begin** → click **Next**
 4. **Installation Type** → select **Role-based or feature-based installation** → **Next**
 
-![Installation Type](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Installation-Type.JPG)
+![Installation Type](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Installation-Type.JPG)
 
 5. **Server Selection** → confirm `DC01` is selected → **Next**
 6. **Server Roles** → check **Active Directory Domain Services and DNS**
 
-![Server Roles](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Server%20Roles.JPG)
+![Server Roles](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Server%20Roles.JPG)
 
 > **Note:** Active Directory DS deployment requires DNS which could be deployed simultaneously. This is because DNS is integral to the functioning and management of an Active Directory environment. It provides name resolution services for domain-joined computers and services, enabling them to locate and communicate with domain controllers.
 
@@ -214,12 +214,12 @@ ping 10.1.20.1
 8. Click **Next** through Features and AD DS information pages
 9. **Confirmation** → check **Restart the destination server automatically if required**
 
-![Confirmation](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Confirmation.JPG)
+![Confirmation](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Confirmation.JPG)
 
 10. Click **Install**
 11. Wait for installation to complete — do **not** close the window
 
-![Installing](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Installing.JPG)
+![Installing](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Installing.JPG)
 
 ---
 
@@ -232,7 +232,7 @@ This phase creates a **new forest** and **new domain** (`homelab.local`), making
 1. In **Server Manager**, click the **notification flag** (yellow triangle) at the top
 2. Click **Promote this server to a domain controller**
 
-![Promote Server to DC](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Promote-Server-to-DC.JPG)
+![Promote Server to DC](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Promote-Server-to-DC.JPG)
 
 ---
 
@@ -242,7 +242,7 @@ This phase creates a **new forest** and **new domain** (`homelab.local`), making
 2. **Root domain name:** `homelab.local`
 3. Click **Next**
 
-![Add new Forest](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Add-new-Forest.JPG)
+![Add new Forest](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Add-new-Forest.JPG)
 
 ---
 
@@ -259,7 +259,7 @@ This phase creates a **new forest** and **new domain** (`homelab.local`), making
 
 > **DSRM (Directory Services Restore Mode) password** is critical — store it in a safe location. It is used to recover AD if the domain becomes unavailable.
 
-![DC Options](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/DC%20Options.JPG)
+![DC Options](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/DC%20Options.JPG)
 
 Click **Next**
 
@@ -271,7 +271,7 @@ A warning may appear: *"A delegation for this DNS server cannot be created..."*
 
 This is **expected and normal** in a new forest with no parent DNS zone. Click **Next** to continue.
 
-![DNS Options](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/DNS%20Option.JPG)
+![DNS Options](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/DNS%20Option.JPG)
 
 ---
 
@@ -279,7 +279,7 @@ This is **expected and normal** in a new forest with no parent DNS zone. Click *
 
 **NetBIOS domain name** will auto-populate as `HOMELAB`. Confirm and click **Next**.
 
-![Netbios name](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Netbios%20name.JPG)
+![Netbios name](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Netbios%20name.JPG)
 
 ---
 
@@ -293,7 +293,7 @@ Leave default paths unless you have a specific reason to change them:
 | Log files folder | `C:\Windows\NTDS` |
 | SYSVOL folder | `C:\Windows\SYSVOL` |
 
-![Paths](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Paths.JPG)
+![Paths](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Paths.JPG)
 
 Click **Next**
 
@@ -303,7 +303,7 @@ Click **Next**
 
 Review the summary. Optionally click **View Script** to export the equivalent PowerShell command for documentation purposes.
 
-![Review Options](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/review%20options.JPG)
+![Review Options](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/review%20options.JPG)
 
 Click **Next**
 
@@ -319,7 +319,7 @@ The wizard runs a prerequisites check. Common warnings you may see:
 | "This computer has at least one physical network adapter..." | Informational — click Next |
 | Any **error** (red) | Must be resolved before proceeding |
 
-![Prerequisites Check](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Prereq-check.JPG)
+![Prerequisites Check](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Prereq-check.JPG)
 
 Once all checks show green or yellow warnings only, click **Install**
 
@@ -355,7 +355,7 @@ DomainMode        : Windows2016Domain
 Name              : homelab
 NetBIOSName       : HOMELAB
 ```
-![Verify Promotion](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/verify%20promotion.JPG)
+![Verify Promotion](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/verify%20promotion.JPG)
 ---
 
 ## 8. Phase 4 — Post-Deployment Configuration
@@ -381,7 +381,7 @@ homelab.local           (Primary — Forward Lookup Zone)
 10.10.10.in-addr.arpa   (Reverse Lookup Zone — if configured)
 ```
 
-![Verify DNS Config](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Verify-DNS-Config.JPG)
+![Verify DNS Config](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Verify-DNS-Config.JPG)
 
 ---
 
@@ -397,7 +397,7 @@ A reverse lookup zone allows DNS to resolve IP addresses back to hostnames — i
 6. **Network ID:** enter `10.1.20` → **Next**
 7. Accept defaults → **Finish**
 
-![Add Reverse Lookup Zone](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Create-reverse-lookup-zone.JPG)
+![Add Reverse Lookup Zone](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Create-reverse-lookup-zone.JPG)
 
 Add a PTR record for DC01:
 ```powershell
@@ -445,7 +445,7 @@ Open **Group Policy Management** (Server Manager → Tools → Group Policy Mana
 | Password must meet complexity requirements | Enabled |
 | Store passwords using reversible encryption | Disabled |
 
-![password Policy](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Password%20Policy.JPG)
+![password Policy](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/Password%20Policy.JPG)
 
 5. Navigate to **Account Lockout Policy**:
 
@@ -455,7 +455,7 @@ Open **Group Policy Management** (Server Manager → Tools → Group Policy Mana
 | Account lockout threshold | 5 invalid attempts |
 | Reset account lockout counter after | 30 minutes |
 
-![Account Lockout Policy](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/account-lockout-policy.JPG)
+![Account Lockout Policy](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/account-lockout-policy.JPG)
 
 ---
 
@@ -522,7 +522,7 @@ Verify the structure was created:
 ```powershell
 Get-ADOrganizationalUnit -Filter * | Select-Object Name, DistinguishedName | Sort-Object DistinguishedName
 ```
-![OU Structure](../Proj-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/OU%20structure.JPG)
+![OU Structure](../PROJ-04-Active-Directory-Domain-Services-Installation-&-Configuration/Images/OU%20structure.JPG)
 ---
 
 ## References
