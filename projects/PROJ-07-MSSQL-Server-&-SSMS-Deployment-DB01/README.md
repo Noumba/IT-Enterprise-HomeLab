@@ -1,8 +1,8 @@
-# HL-SRV-003 — MS SQL Server 2025 Developer Edition Deployment
+# PROJ-007 — MS SQL Server 2025 Developer Edition Deployment
 
 | Field         | Detail                              |
 |---------------|-------------------------------------|
-| **Doc ID**    | DB01                          |
+| **PROJ ID**    | PROJ-007                          |
 | **Version**   | 1.0                                 |
 | **Date**      | 2026-06-22                          |
 | **Author**    | Leonard Noumba                      |
