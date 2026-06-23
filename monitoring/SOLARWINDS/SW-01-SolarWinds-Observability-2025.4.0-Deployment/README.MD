@@ -202,12 +202,12 @@ Started Installation
 ![Start](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/Start.JPG)
 
 Selected Standard Platform and Clicked Next
-![Standard Platform](/Images/Standard%20platform.JPG)
+![Standard Platform](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/Standard%20platform.JPG)
 
 Accepted:
 
 - License agreement
-![License agreement](/Images/License%20Agreement.JPG)
+![License agreement](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/License%20Agreement.JPG)
 
 ---
 
@@ -220,7 +220,7 @@ Example:
 ```text
 C:\Program Files (x86)\SolarWinds\
 ```
-![Location](/Images/location.JPG)
+![Location](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/location.JPG)
 ---
 
 # Step 5 - System Validation
@@ -234,11 +234,11 @@ Installer performed:
 
 All required checks completed successfully.
 
-![Test](/Images/Test.JPG)
+![Test](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/Test.JPG)
 
 Clicked Install to start the Installation.
 
-![installation started](/Images/installation-started.JPG)
+![installation started](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/installation-started.JPG)
 
 ---
 
@@ -259,13 +259,13 @@ Database server:
 ```text
 DB01
 ```
-![Config Wizard](/Images/Config%20wizard.JPG)
+![Config Wizard](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/Config%20wizard.JPG)
 
 Database connectivity validated.
-![Config Wizard auth success](/Images/config%20auth%20success.JPG)
+![Config Wizard auth success](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/config%20auth%20success.JPG)
 
 Completed the Wizard to create all three (3) required databases and started the DB Configuration
-![Config Wizard started](/Images/Config%20Started.JPG)
+![Config Wizard started](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/Config%20Started.JPG)
 
 Waited for the Configuration Wizard to complete
 
@@ -274,7 +274,7 @@ Waited for the Configuration Wizard to complete
 # Step 7 - Complete Installation
 
 DB Configuration completed successfully.
-![CW completed](/Images/CW%20completed.JPG)
+![CW completed](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/CW%20completed.JPG)
 
 Verified SolarWinds services:
 
@@ -285,7 +285,7 @@ Services.msc
 Checked:
 
 - SolarWinds services running
-![SW Services](/Images/services.JPG)
+![SW Services](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/services.JPG)
 
 ---
 
@@ -313,7 +313,7 @@ Completed:
 
 - Initial login: Set default Admin account credentials
 
-![Admin Creds](/Images/admin%20creds.JPG)
+![Admin Creds](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/Images/admin%20creds.JPG)
 
 ---
 
