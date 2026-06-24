@@ -300,6 +300,8 @@ A test topology was created to validate communication.
 
 ```
 
+![Sample Network](../PROJ-08-EVE-NG-Network-Simulation-Lab-Deployment/Images/sample%20network.JPG)
+
 ---
 
 # Virtual PC Configuration
@@ -309,9 +311,9 @@ A test topology was created to validate communication.
 | Parameter | Value |
 |-|-|
 | Hostname | VPC1 |
-| IP Address | 10.1.10.10 |
+| IP Address | 10.1.50.20 |
 | Subnet Mask | 255.255.255.0 |
-| Gateway | 10.1.10.1 |
+| Gateway | 10.1.50.10 |
 
 ---
 
@@ -320,10 +322,10 @@ A test topology was created to validate communication.
 | Parameter | Value |
 |-|-|
 | Hostname | VPC2 |
-| IP Address | 10.1.30.10 |
+| IP Address | 10.1.50.21 |
 | Subnet Mask | 255.255.255.0 |
-| Gateway | 10.1.30.1 |
-
+| Gateway | 10.1.50.10 |
+![VPC](../PROJ-08-EVE-NG-Network-Simulation-Lab-Deployment/Images/VPC.JPG)
 ---
 
 # VLAN Validation
@@ -337,37 +339,7 @@ Validated:
 - Gateway communication
 - Inter-VLAN reachability
 
----
-
-# Connectivity Testing
-
-## Ping Test
-
-From VPC1:
-
-```
-ping 10.1.30.10
-```
-
-Result:
-
-```
-SUCCESS
-```
-
----
-
-From VPC2:
-
-```
-ping 10.1.10.10
-```
-
-Result:
-
-```
-SUCCESS
-```
+![Connectivity Test](../PROJ-08-EVE-NG-Network-Simulation-Lab-Deployment/Images/connectivity%20test.JPG)
 
 ---
 
@@ -476,11 +448,3 @@ COMPLETED
 EVE-NG has been successfully deployed and integrated into the home lab environment.
 
 The platform is ready for advanced routing, switching, firewall, monitoring, and automation simulations.
-
----
-
-# Change Log
-
-| Version | Date | Author | Description |
-|-|-|-|-|
-| 1.0 | YYYY-MM-DD | Vinci | Initial EVE-NG deployment documentation |
