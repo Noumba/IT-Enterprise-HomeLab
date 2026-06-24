@@ -70,7 +70,7 @@ The EVE-NG deployment follows an enterprise-style network segmentation model.
                                      ----------------------
                                      |                    |
                                    VPC1                 VPC2
-                               10.1.10.x            10.1.30.x
+                               10.1.50.x            10.1.50.x
 ```
 
 ---
@@ -83,7 +83,7 @@ The EVE-NG deployment follows an enterprise-style network segmentation model.
 |-|-|
 | Hypervisor | VMware ESXi |
 | Network Platform | Virtual Switches / Port Groups |
-| EVE Network | PG-LAB |
+| EVE Network | PG-Network |
 | VLAN | VLAN50 |
 
 ---
@@ -92,12 +92,12 @@ The EVE-NG deployment follows an enterprise-style network segmentation model.
 
 | Parameter | Value |
 |-|-|
-| Hostname | EVE01 |
+| Hostname | EVE-NG01 |
 | Platform | EVE-NG Community Edition |
 | IP Address | 10.1.50.10 |
 | Subnet Mask | 255.255.255.0 |
 | Gateway | 10.1.50.1 |
-| Port Group | PG-LAB |
+| Port Group | PG-Network |
 | VLAN ID | 50 |
 
 ---
@@ -106,14 +106,18 @@ The EVE-NG deployment follows an enterprise-style network segmentation model.
 
 The EVE-NG virtual machine was deployed on VMware ESXi.
 
+![ESXi](../PROJ-08-EVE-NG-Network-Simulation-Lab-Deployment/Images/ESXi.JPG)
+
 ## Virtual Hardware
 
 | Resource | Allocation |
 |-|-|
-| CPU | 4 vCPU |
+| CPU | 3 vCPU |
 | Memory | 8 GB RAM |
-| Storage | 100 GB Thin Provision |
+| Storage | 25 GB Thin Provision |
 | Network Adapter | VMXNET3 |
+
+![vHardware](../PROJ-08-EVE-NG-Network-Simulation-Lab-Deployment/Images/vHardware.JPG)
 
 ---
 
@@ -161,7 +165,7 @@ Traffic flow:
 EVE-NG Device
        |
        |
-VLAN50-LAB
+VLAN50-Network
        |
        |
 pfSense
@@ -184,7 +188,32 @@ pfSense provides:
 
 # EVE-NG Initial Setup
 
-## Step 1 - Access Console
+## Step 1 - Download the EVE-NG OVA
+
+1. On a machine with internet access, go to: [https://www.eve-ng.net/index.php/downloads/](https://www.eve-ng.net/index.php/downloads/)
+2. Download the **EVE-NG Community Edition iso**
+3. Transfer the `.iso` file to a location accessible from the ESXi host
+
+---
+
+### Import the OVA into ESXi
+
+1. Log into the **ESXi Host Client** (`https://<ESXi IP>`)
+2. In the left pane, click **Virtual Machines**
+3. Click **Create / Register VM**
+4. Select **Create a new virtual machine** → click **Next**
+5. **Name:** `EVE-NG`
+6. **Select Storage:** choose your datastore → click **Next**
+7. Click **Choose Files** → select the downloaded `.iso` file → click **Next**
+8. **Network Mappings:** map the first network adapter to **PG-LAB (VLAN50)** → click **Next**
+9. Review the summary → click **Finish**
+10. Wait for the import to complete (progress shown at the bottom of the screen)
+11. Start the EVE-NG VM to kick-off the installation.
+
+
+### Further configuration
+
+Follow installation wizard
 
 Login:
 
@@ -193,7 +222,7 @@ Username:
 root
 
 Password:
-Configured during installation
+default EVE-NG password
 ```
 
 ---
@@ -236,7 +265,11 @@ Accessed:
 https://10.1.50.10
 ```
 
+![Console](../PROJ-08-EVE-NG-Network-Simulation-Lab-Deployment/Images/Console.JPG)
+
 Successful access confirmed.
+
+>NOTE: Initial Login user Admin pass eve
 
 ---
 
