@@ -104,9 +104,7 @@ Example:
 ```
 /opt/unetlab/addons/dynamips/
 
-└── c3750-ipservicesk9-mz.122-55.SE10/
-
-        └── c3750-ipservicesk9-mz.122-55.SE10.bin
+    └── c3750-ipservicesk9-mz.122-55.SE10.bin
 ```
 
 ---
