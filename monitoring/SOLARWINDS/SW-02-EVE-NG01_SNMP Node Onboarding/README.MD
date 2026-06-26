@@ -26,12 +26,12 @@ The device is monitored via **SNMPv2c**, which provides interface traffic statis
 
 | Item | Detail |
 |---|---|
-| Toronto-CR1 IP | 10.1.50.100 |
+| Toronto-East-Edge-R1 IP | 192.168.40.2 |
 | SNMP Version | v2c |
-| Community String | `DaVince-SNMP-RO` |
-| MON01 reachable from CR1 | Confirmed — ping 10.1.20.20 succeeds |
-| pfSense static route added | 192.168.10.0/24 → 10.1.50.100 |
-| SNMP port open | UDP 161 confirmed via `Test-NetConnection` |
+| Community String | `SNMP-RO` |
+| MON01 reachable from EER1 | Confirmed — ping 10.1.20.20 succeeds |
+| pfSense static route added | 192.168.40.0/24 → 10.1.50.100 |
+| SNMP port open | UDP 161 confirmed via |
 
 ---
 
@@ -41,7 +41,7 @@ The device is monitored via **SNMPv2c**, which provides interface traffic statis
 2. Navigate to `https://10.1.20.20`
 3. Log in with administrator credentials
 
-> 📸 *Screenshot: Orion login page*
+![Login page](../SW-02-EVE-NG01_SNMP%20Node%20Onboarding/Images/login%20page.JPG)
 
 ---
 
@@ -51,7 +51,7 @@ The device is monitored via **SNMPv2c**, which provides interface traffic statis
 2. Select **All Settings** from the dropdown
 3. Under the **Node & Group Management** section, click **Manage Nodes**
 
-> 📸 *Screenshot: Settings → All Settings → Manage Nodes*
+![Navigate to manage nodes](../SW-02-EVE-NG01_SNMP%20Node%20Onboarding/Images/navigate_to_manage_nodes.JPG)
 
 ---
 
@@ -60,7 +60,7 @@ The device is monitored via **SNMPv2c**, which provides interface traffic statis
 1. Click the **Add Node** button (top left of the Manage Nodes page)
 2. The **Add Node** wizard opens
 
-> 📸 *Screenshot: Manage Nodes page with Add Node button highlighted*
+![Add New Node](../SW-02-EVE-NG01_SNMP%20Node%20Onboarding/Images/Add%20node%20page.JPG)
 
 ---
 
@@ -68,28 +68,23 @@ The device is monitored via **SNMPv2c**, which provides interface traffic statis
 
 1. In the **Hostname or IP Address** field enter:
 ```
-10.1.50.100
+192.168.40.2
 ```
 2. Under **Polling Method** select **SNMP**
 3. Set **SNMP Version** to **SNMPv2c**
 4. Enter the community string:
 ```
-DaVince-SNMP-RO
+SNMP-RO
 ```
 5. Leave all other fields at default
 6. Click **Test** to verify SNMP connectivity
 
-> 📸 *Screenshot: Add Node form filled with IP and SNMP details*
-
 **Expected Test Result:**
 ```
-System name:     Toronto-CR1
-System location: DaVince-Technologies-HomeLab-EVE-NG
-System contact:  leo@homelab.local
-SNMP status:     ✅ Successful
+Test Successful
 ```
 
-> 📸 *Screenshot: Successful SNMP test result*
+![Enter Node Details](../SW-02-EVE-NG01_SNMP%20Node%20Onboarding/Images/snmp%20test.JPG)
 
 7. Click **Next**
 
@@ -106,7 +101,7 @@ SolarWinds will display all available resources discovered via SNMP. Select the 
 | ✅ Memory Used | Monitors router memory utilisation |
 | ✅ All Network Interfaces | Tracks traffic on fa0/0, fa1/0, fa2/0, Loopback0 |
 
-> 📸 *Screenshot: Resource selection screen with selected items highlighted*
+![Select Resources](../SW-02-EVE-NG01_SNMP%20Node%20Onboarding/Images/Select%20Resources.JPG)
 
 1. Check all items listed above
 2. Click **Next**
@@ -119,28 +114,28 @@ SolarWinds will display all available resources discovered via SNMP. Select the 
 
 | Field | Value |
 |---|---|
-| Node Name | Toronto-CR1 |
-| IP Address | 10.1.50.100 |
+| Node Name | Toronto-East-Edge-R1 |
+| IP Address | 192.168.40.2 |
 | Polling Method | SNMPv2c |
-| Community String | DaVince-SNMP-RO |
+| Community String | SNMP-RO |
 | Resources | ICMP, CPU, Memory, Interfaces |
 
 2. Click **Add Node**
 3. SolarWinds begins polling immediately
 
-> 📸 *Screenshot: Node summary confirmation screen*
+![Add Node](../SW-02-EVE-NG01_SNMP%20Node%20Onboarding/Images/Add%20node.JPG)
 
 ---
 
 ## Step 7 — Verify Node is Being Monitored
 
-1. Click **My Dashboards → Home** in the top navigation
-2. Locate **Toronto-CR1** in the **All Nodes** widget
+1. Click **My Dashboards → NPM Summary** in the top navigation
+2. Expand the grouping and confirm node was added
 3. Confirm the node shows a **green** Up status
 
-> 📸 *Screenshot: Home dashboard showing Toronto-CR1 with green Up status*
+![Node Added](../SW-02-EVE-NG01_SNMP%20Node%20Onboarding/Images/node%20added.JPG)
 
-4. Click on **Toronto-CR1** to open the Node Details page
+4. Click on **Toronto-East-Edge-R1** to open the Node Details page
 5. Confirm the following are populating with data:
 
 | Section | Expected |
@@ -148,22 +143,10 @@ SolarWinds will display all available resources discovered via SNMP. Select the 
 | Node Status | Up (green) |
 | CPU Load | % value shown |
 | Memory Usage | % value shown |
-| Interfaces | fa0/0, fa1/0, fa2/0 listed with traffic graphs |
+| Interfaces | fa0/0 |
 | Response Time | ms value shown |
 
-> 📸 *Screenshot: Toronto-CR1 Node Details page with all resources populated*
-
----
-
-## Step 8 — Rename Node (Optional but Recommended)
-
-SolarWinds may display the node by IP. Set the correct hostname:
-
-1. On the **Node Details** page click **Edit Node** (top right)
-2. Under **Node Name** change to `Toronto-CR1`
-3. Click **Submit**
-
-> 📸 *Screenshot: Edit Node page with hostname field*
+![Node Details](../SW-02-EVE-NG01_SNMP%20Node%20Onboarding/Images/Node%20details.JPG)
 
 ---
 
@@ -174,21 +157,20 @@ SolarWinds may display the node by IP. Set the correct hostname:
 | SNMP test during Add Node wizard | ✅ Successful |
 | Node shows Up status on dashboard | ✅ Green |
 | CPU and Memory data populating | ✅ Confirmed |
-| All interfaces visible | ✅ fa0/0, fa1/0, fa2/0, Loopback0 |
+| All interfaces visible | ✅ fa0/0, Loopback0 |
 | Response time graphing | ✅ Active |
 
 ---
 
 ## Notes
 
-- The same onboarding process applies to all remaining EVE-NG devices (Toronto-West-SW1, Toronto-East-SW2, R-37257, R-37258) — use each device's management IP and the same community string `DaVince-SNMP-RO`
-- If the SNMP test fails during Step 4, verify pfSense has the static route for `192.168.10.0/24` → `10.1.50.100` and that UDP 161 is permitted from MON01 to the device subnet
-- Loopback addresses (e.g. `1.1.1.1` for Toronto-CR1) can be added as a second node entry in SolarWinds for a more stable always-up monitoring endpoint
+- The same onboarding process applies to all remaining EVE-NG devices (Toronto-West-SW1, Toronto-East-SW2) — use each device's management IP and the same community string `SNMP-RO`
+- If the SNMP test fails during Step 4, verify connectivity via ping and that UDP 161 is permitted from MON01 to the device subnet
+- Loopback addresses (e.g. `1.1.1.1`) can be added as a second node entry in SolarWinds for a more stable always-up monitoring endpoint
 
 ---
 
 ## References
 
-- HL-SRV-003 — SolarWinds Observability Self-Hosted Deployment
-- HL-NET-004-CFG-001 — EVE-NG Topology Device Configuration
-- SolarWinds Orion Node Management: https://documentation.solarwinds.com
+- [SolarWinds Observability Self-Hosted Deployment](../SW-01-SolarWinds-Observability-2025.4.0-Deployment/README.MD)
+- [EVE-NG01 Lab](../../../eve-ng%20labs/EVE-NG01-Core-Access%20Network%20Simulation%20Lab/README.MD)
