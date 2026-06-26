@@ -27,7 +27,7 @@ Problem Statement
 
 ## 1. Topology Overview
 
-![Network Topology](../Core-Access%20Network%20Simulation%20Lab/Images/network%20topology.JPG)
+![Network Topology](../EVE-NG01-Core-Access%20Network%20Simulation%20Lab/Images/network%20topology.JPG)
 
 ---
 
@@ -122,7 +122,7 @@ Assign 37257 and 37258 IPs within the same subnet as their upstream switch and p
 
 The EVE-NG host needs return routes to reach devices inside the topology. Without these, pings from EVE-NG host to any internal subnet fail even when the devices can reach the host.
 
-![EVE-NG static routes](../Core-Access%20Network%20Simulation%20Lab/Images/EVE-NG%20static%20routes.JPG)
+![EVE-NG static routes](../EVE-NG01-Core-Access%20Network%20Simulation%20Lab/Images/EVE-NG%20static%20routes.JPG)
 ---
 
 ## 5. pfSense — Static Routes Required
@@ -131,7 +131,7 @@ For MON01 (10.1.20.20) to reach the EVE-NG devices, pfSense needs static routes 
 
 **pfSense → System → Routing → Static Routes → Add:**
 
-![EVE-NG static routes](../Core-Access%20Network%20Simulation%20Lab/Images/pfSense%20static%20routes.JPG)
+![EVE-NG static routes](../EVE-NG01-Core-Access%20Network%20Simulation%20Lab/Images/pfSense%20static%20routes.JPG)
 ---
 
 ## 6. Verification
@@ -148,7 +148,7 @@ ping 192.168.10.2
 # Ping SW2 management
 ping 192.168.20.2
 ```
-![EVE-NG ping test](../Core-Access%20Network%20Simulation%20Lab/Images/eve-ng%20ping%20test.JPG)
+![EVE-NG ping test](../EVE-NG01-Core-Access%20Network%20Simulation%20Lab/Images/eve-ng%20ping%20test.JPG)
 
 ### From Toronto-CR1 Console
 
@@ -156,14 +156,14 @@ ping 192.168.20.2
 ping 10.1.50.1          ! pfSense gateway
 ping 10.1.20.20         ! MON01 SolarWinds
 ```
-![CR1 ping test](../Core-Access%20Network%20Simulation%20Lab/Images/CR1%20ping%20test.JPG)
+![CR1 ping test](../EVE-NG01-Core-Access%20Network%20Simulation%20Lab/Images/CR1%20ping%20test.JPG)
 ---
 
 ## 6. SolarWinds Monitoring
 
 Devices successfully onboarded into SolarWinds for monitoring.
 
-![SolarWinds Monitoring](../Core-Access%20Network%20Simulation%20Lab/Images/monitoring.JPG)
+![SolarWinds Monitoring](../EVE-NG01-Core-Access%20Network%20Simulation%20Lab/Images/monitoring.JPG)
 
 ## 7. Quick Reference
 
