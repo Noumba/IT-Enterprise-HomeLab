@@ -47,203 +47,25 @@ Problem Statement
 
 > SW1 is a Layer 2 IOL switch. It does not route — it switches frames between the 7206VXR and 37257. The SVI (VLAN1) gives it a management IP so SolarWinds can poll it.
 
-```
-! ============================================================
-! Toronto-West-SW1 — Layer 2 Access Switch (Left)
-! ============================================================
-
-enable
-configure terminal
-
-! --- Hostname ---
-hostname Toronto-West-SW1
-
-! --- VLAN1 SVI for management ---
-interface Vlan1
- description MGMT-SVI
- ip address 192.168.10.2 255.255.255.0
- no shutdown
-
-! --- Default gateway pointing to Toronto-CR1 fa1/0 ---
-ip default-gateway 192.168.10.1
-
-! --- e0/0 — Uplink to Toronto-CR1 fa1/0 ---
-interface Ethernet0/0
- description UPLINK-TO-7206VXR-FA1/0
- switchport mode access
- switchport access vlan 1
- no shutdown
-
-! --- e0/1 — Downlink to 37257 fa0/0 ---
-interface Ethernet0/1
- description DOWNLINK-TO-37257
- switchport mode access
- switchport access vlan 1
- no shutdown
-
-! --- Enable ip routing ---
-
-ip routing
-ip route 0.0.0.0 0.0.0.0 192.168.10.1
-
-
-! --- SNMP Configuration ---
-access-list 10 permit 10.1.20.20
-access-list 10 permit 10.1.50.10
-snmp-server community DaVince-SNMP-RO RO 10
-snmp-server location DaVince-Technologies-HomeLab-EVE-NG
-snmp-server contact leo@homelab.local
-snmp-server enable traps
-snmp-server host 10.1.20.20 version 2c DaVince-SNMP-RO
-
-! --- Save configuration ---
-end
-write memory
-```
+[View Toronto-West-SW1 Configs](../../network%20configs/cisco/Core-Access%20Network%20Simulation%20Lab/Toronto-West_SW1_Configs.md)
 
 ---
 
 ### 2.3 — Toronto-East-SW1 (Layer 2 Switch — Right)
 
-```
-! ============================================================
-! Toronto-East-SW1 — Layer 2 Access Switch (Right)
-! ============================================================
-
-enable
-configure terminal
-
-! --- Hostname ---
-hostname Toronto-East-SW1
-
-! --- VLAN1 SVI for management ---
-interface Vlan1
- description MGMT-SVI
- ip address 192.168.20.2 255.255.255.0
- no shutdown
-
-! --- Default gateway pointing to Toronto-CR1 fa2/0 ---
-ip default-gateway 192.168.20.1
-
-! --- e0/0 — Uplink to Toronto-CR1 fa2/0 ---
-interface Ethernet0/0
- description UPLINK-TO-Toronto-CR1-FA2/0
- switchport mode access
- switchport access vlan 1
- no shutdown
-
-! --- e0/1 — Downlink to 37258 fa0/0 ---
-interface Ethernet0/1
- description DOWNLINK-TO-37258
- switchport mode access
- switchport access vlan 1
- no shutdown
-
-! --- Enable ip routing ---
-
-ip routing
-ip route 0.0.0.0 0.0.0.0 192.168.20.1
-
-! --- SNMP Configuration ---
-access-list 10 permit 10.1.20.20
-access-list 10 permit 10.1.50.10
-snmp-server community DaVince-SNMP-RO RO 10
-snmp-server location DaVince-Technologies-HomeLab-EVE-NG
-snmp-server contact leo@homelab.local
-snmp-server enable traps
-snmp-server host 10.1.20.20 version 2c DaVince-SNMP-RO
-
-! --- Save configuration ---
-end
-write memory
-```
+[View Toronto-East-SW1 Configs](../../network%20configs/cisco/Core-Access%20Network%20Simulation%20Lab/Toronto-East-SW1_Configs.md)
 
 ---
 
 ### 2.4 — Toronto West Edge R1 (Edge Router — Left)
 
-```
-! ============================================================
-! Toronto West Edge R1 — Edge Router Left
-! ============================================================
-
-enable
-configure terminal
-
-! --- Hostname ---
-hostname Toronto-West-Edge-R1
-
-! --- Loopback (stable management IP for SolarWinds) ---
-interface Loopback0
- description MGMT-LOOPBACK
- ip address 2.2.2.2 255.255.255.255
- no shutdown
-
-! --- fa0/0 — Uplink to Toronto-West-SW1 e0/1 ---
-interface FastEthernet0/0
- description UPLINK-TO-Toronto-West-SW1
- ip address 192.168.30.2 255.255.255.0
- no shutdown
-
-! --- Default route — send all traffic to SW1 → Toronto-CR1 ---
-ip route 0.0.0.0 0.0.0.0 192.168.30.1
-
-! --- SNMP Configuration ---
-access-list 10 permit 10.1.20.20
-access-list 10 permit 10.1.50.10
-snmp-server community exdxxssdd RO
-snmp-server location "Toronto West"
-snmp-server contact leo@homelab.local
-snmp-server enable traps
-snmp-server host 10.1.20.20 version 2c exdxxssdd
-
-! --- Save configuration ---
-end
-write memory
-```
+[View Toronto West Edge R1 Configs](../../network%20configs/cisco/Core-Access%20Network%20Simulation%20Lab/Toronto-West-Edge-R1_Configs.md)
 
 ---
 
 ### 2.5 — Toronto-East-Edge-R1 (Edge Router — Right)
 
-```
-! ============================================================
-! Toronto-East-Edge-R1 — Edge Router Right
-! ============================================================
-
-enable
-configure terminal
-
-! --- Hostname ---
-hostname Toronto-East-Edge-R1
-
-! --- Loopback (stable management IP for SolarWinds) ---
-interface Loopback0
- description MGMT-LOOPBACK
- ip address 3.3.3.3 255.255.255.255
- no shutdown
-
-! --- fa0/0 — Uplink to Toronto-East-SW1 e0/1 ---
-interface FastEthernet0/0
- description UPLINK-TO-Toronto-East-Edge-R1
- ip address 192.168.40.2 255.255.255.0
- no shutdown
-
-! --- Default route — send all traffic to Toronto-East-SW1 → Toronto-CR1 ---
-ip route 0.0.0.0 0.0.0.0 192.168.40.1
-
-! --- SNMP Configuration ---
-access-list 10 permit any
-snmp-server community exdxxssdd RO
-snmp-server location "Toronto East Edge"
-snmp-server contact leo@homelab.local
-snmp-server enable traps
-snmp-server host 10.1.20.20 version 2c exdxxssdd
-
-! --- Save configuration ---
-end
-write memory
-```
+[View Toronto-East-Edge-R1 Configs](../../network%20configs/cisco/Core-Access%20Network%20Simulation%20Lab/Toronto-East-Edge-R1_Configs.md)
 
 ---
 
